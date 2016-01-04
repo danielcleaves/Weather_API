@@ -1,0 +1,60 @@
+<html>
+    <head>
+
+        <title>Weather Forecast</title>
+        <meta charset='utf-8' />
+        <meta name='description' content='Weather Forecast' />
+        <link rel='stylesheet' type='text/css' href='main.css' />
+        <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script>
+        $(document).ready(function() {
+            
+            var url = "http://api.openweathermap.org/data/2.5/weather?";
+            var api_key = "fb29fba5f3bb354d876120afef23ddbd";
+            
+            $('form').submit(function(){
+                var city = $('#city').val();
+                var new_url = url + "q=" + city + "&appid=" + api_key
+                
+                $.get(new_url,function(res) {
+                    var name  = "" 
+                    var temp = ""
+                    name = "<h1>" +  res.name + "</h1>"; 
+                    temp = "<p>" + Math.floor(res.main.temp * 9/5 - 459) + "</p>";
+
+                    $('#weather_listing').html(name);
+                    $('#weather_listing').append(temp);
+
+                });
+                return false;
+            });
+        });
+
+            // $('get_weather',function(data) {
+            //    console.log(data[0].main);
+
+            //     },
+            //     'json'
+            // );
+            // return false;
+            // });
+
+
+
+        </script>
+    </head>
+
+    <body>
+        <h1>Enter a city to see the current temperature</h2>
+        <form>
+            <input type='text' name='q' id = "city" placeholder='Enter city here' />
+            <input type = "hidden" name = "appid" value = "fb29fba5f3bb354d876120afef23ddbd">
+            <input type = "submit" value = "Get Weather!">
+
+            <div id = "weather_listing">
+
+
+            </div>
+        </form>    
+    </body>
+</html>
